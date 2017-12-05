@@ -1,8 +1,9 @@
 /*
  * Create a list that holds all of your cards
  */
-var cards = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-leaf', 'fa-bicycle', 'fa-bomb',
-'fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-leaf', 'fa-bicycle', 'fa-bomb'];
+var cards = ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 'fa fa-cube', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-bomb',
+'fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 'fa fa-cube', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-bomb'];
+var openCards = [];
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -42,9 +43,43 @@ function getHtml() {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 function click() {
-    $(".card").click(function(){     
-        $(this).addClass("open show");
+    $(".card").click(function(){   
+        if (openCards.length === 0) {
+            openCards.push($(this).children().attr("class"));
+            $(this).addClass("open show");
+        }  
+        else if (openCards.length === 1) {
+            openCards.push($(this).children().attr("class"));
+            $(this).addClass("open show");
+            match(openCards);
+        }
+        else {
+            return false;
+        }
     });
 }
 
+function match(array) {
+    if (array[0] === array[1]) {
+        matchSuccess();
+    }
+    else {
+        matchFailure();
+    }
+}
 
+function matchSuccess() {
+    $(".show").addClass("match");
+}
+
+function matchFailure() {
+    $(".show").addClass("errorShake");
+
+}
+
+function restart() {
+    getHtml();
+    click();
+}
+
+restart();
