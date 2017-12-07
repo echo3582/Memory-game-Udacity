@@ -61,24 +61,46 @@ function click() {
 
 function match(array) {
     if (array[0] === array[1]) {
-        matchSuccess();
+        matchSuccess(array[0]);
     }
     else {
-        matchFailure();
+        matchFailure(array);
     }
 }
 
-function matchSuccess() {
-    $(".show").addClass("match");
+function matchSuccess(classname) {
+    $(".card").each(function(){
+         if($(this).children().attr("class") === classname) {
+            $(this).addClass("match");
+        }
+    });
+    openCards = [];
 }
 
-function matchFailure() {
-    $(".show").addClass("errorShake");
-
+function matchFailure(classname) {
+    $(".card").each(function() {
+        if($(this).children().attr("class") === classname[0] && $(this).hasClass("open")) {
+            $(this).addClass("errorShake");
+            setTimeout('$(this).attr("class","card")',1000);
+        } else if ($(this).children().attr("class") === classname[1] && $(this).hasClass("open")) {
+            $(this).addClass("errorShake");
+            setTimeout('$(this).attr("class","card")',1000);
+        }
+    });
+    setTimeout(function() {
+        $(".card").each(function() {
+            if($(this).children().attr("class") === classname[0] && $(this).hasClass("open")) {
+                $(this).attr("class","card");
+            } else if ($(this).children().attr("class") === classname[1] && $(this).hasClass("open")) {
+                $(this).attr("class","card");
+            }
+        });
+    },1000);
+    openCards = [];
 }
 
 function restart() {
-    getHtml();
+    // getHtml();
     click();
 }
 
