@@ -4,6 +4,8 @@
 var cards = ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 'fa fa-cube', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-bomb',
 'fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 'fa fa-cube', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-bomb'];
 var openCards = [];
+var matchNum = 0;
+var count = 0;
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -44,6 +46,7 @@ function getHtml() {
  */
 function click() {
     $(".card").click(function(){   
+
         if (openCards.length === 0) {
             openCards.push($(this).children().attr("class"));
             $(this).addClass("open show");
@@ -75,6 +78,11 @@ function matchSuccess(classname) {
         }
     });
     openCards = [];
+    $(".moves").html(++count);
+    countSteps();
+    if (matchNum === 8) {
+        congratulation();
+    }
 }
 
 function matchFailure(classname) {
@@ -87,6 +95,8 @@ function matchFailure(classname) {
             setTimeout('$(this).attr("class","card")',1000);
         }
     });
+
+    //卡片翻转要设置延迟，不然前面的匹配失败效果就没有了。
     setTimeout(function() {
         $(".card").each(function() {
             if($(this).children().attr("class") === classname[0] && $(this).hasClass("open")) {
@@ -97,11 +107,37 @@ function matchFailure(classname) {
         });
     },1000);
     openCards = [];
+    $(".moves").html(++count);
+    countSteps();
+
+}
+
+function countSteps() {
+    switch(count) {
+        case 3:
+        starRemove();
+        break;
+        case 7:
+        starRemove();
+        break;
+        case 10:
+        starRemove();
+        break;
+    }
+}
+
+function starRemove() {
+    $(".stars li:first").remove();
+
+}
+
+function congratulation() {
+    setTimeout("alert('congratulation!')",1000);
 }
 
 function restart() {
-    // getHtml();
-    click();
+    
+   
 }
-
-restart();
+getHtml();
+click();
