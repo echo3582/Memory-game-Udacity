@@ -6,6 +6,10 @@ var cards = ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt
 var openCards = [];
 var matchNum = 0;
 var count = 0;
+var second = 0;
+var isCounting = false;
+var timerID = null;
+var starNum = 3;
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -31,6 +35,7 @@ function shuffle(array) {
 function getHtml() {
 	shuffle(cards);
 	$(".card").each(function(index){
+        $(this).attr("class","card");  //restart的时候把牌面背过去
 		$(this).children().attr("class",cards[index]);
 	});
 }
@@ -46,6 +51,11 @@ function getHtml() {
  */
 function click() {
     $(".card").click(function(){   
+        //防止每次点击的时候计时发生紊乱
+        if (!isCounting) {
+            timerBegin();
+            isCounting = true;
+        }
 
         if (openCards.length === 0) {
             openCards.push($(this).children().attr("class"));
@@ -59,7 +69,7 @@ function click() {
         else {
             return false;
         }
-    });
+    });    
 }
 
 function match(array) {
@@ -79,6 +89,7 @@ function matchSuccess(classname) {
     });
     openCards = [];
     $(".moves").html(++count);
+    matchNum++;
     countSteps();
     if (matchNum === 8) {
         congratulation();
@@ -116,12 +127,15 @@ function countSteps() {
     switch(count) {
         case 3:
         starRemove();
+        starNum--;
         break;
         case 7:
         starRemove();
+        starNum--;
         break;
         case 10:
         starRemove();
+        starNum--;         
         break;
     }
 }
@@ -129,15 +143,45 @@ function countSteps() {
 function starRemove() {
     $(".stars li:first").remove();
 
-}
+} 
 
 function congratulation() {
-    setTimeout("alert('congratulation!')",1000);
+    var star = null;
+    clearInterval(timerID);
+    var second = $(".timer").html();
+    if (starNum === 1) {
+        star = ' star';
+    } else {
+        star = ' stars';
+    }
+    setTimeout(function complete() {
+        alert('Congratulation! You win!' + ' With' + starNum + star + ' and use ' + 
+            second + ' seconds'+ ' and ' + count + ' moves!' );
+    },1000);
+
 }
 
 function restart() {
-    
+    $(".restart").click(function() {
+        getHtml();
+        clearInterval(timerID);
+        count = 0;
+        second = 0;
+        isCounting = false;
+        $(".moves").html(0);
+        $(".timer").html(0); 
+        $(".stars").empty();
+        $(".stars").append("<li><i class='fa fa-star'></i></li><li><i class='fa fa-star'></i></li><li><i class='fa fa-star'></i></li>");
+    });
    
 }
-getHtml();
+
+function timerBegin() {
+    timerID = setInterval(function() {
+        second += 1;
+        $(".timer").html(second);
+    }, 1000);
+}
+
 click();
+restart();
