@@ -17,7 +17,8 @@ body {
 }
 
 body {
-    background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    background: #ffffff url('../img/geometry2.png');
+    /* Background pattern from Subtle Patterns */
     font-family: 'Coda', cursive;
 }
 
@@ -32,6 +33,7 @@ h1 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
 }
+
 
 /*
  * Styles for the deck of cards
@@ -86,6 +88,7 @@ h1 {
     animation: shake 0.8s;
 }
 
+
 /*
  * Styles for the Score Panel
  */
@@ -118,12 +121,12 @@ h1 {
 }
 
 .congratulation {
-    background: rgba(220,220,220,0.8);
+    background: rgba(220, 220, 220, 0.8);
     position: absolute;
     height: 100%;
     width: 100%;
     top: 0;
-    left: 0; 
+    left: 0;
     display: none;
 }
 
