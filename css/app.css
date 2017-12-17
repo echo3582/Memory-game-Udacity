@@ -116,3 +116,35 @@ h1 {
 .score-panel .timer {
     margin-left: 50px;
 }
+
+.congratulation {
+    background: rgba(220,220,220,0.8);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0; 
+    display: none;
+}
+
+.textShow {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 200px;
+    width: 440px;
+    margin: auto;
+    text-align: center;
+    background: #eaeaea;
+    border-radius: 10px;
+}
+
+.tryAgain {
+    font-size: 20px;
+    background: black;
+    margin-top: 30px;
+    border-radius: 7px;
+    color: white;
+}

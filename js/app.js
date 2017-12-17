@@ -125,15 +125,15 @@ function matchFailure(classname) {
 
 function countSteps() {
     switch(count) {
-        case 3:
-        starRemove();
-        starNum--;
-        break;
-        case 7:
-        starRemove();
-        starNum--;
-        break;
         case 10:
+        starRemove();
+        starNum--;
+        break;
+        case 20:
+        starRemove();
+        starNum--;
+        break;
+        case 30:
         starRemove();
         starNum--;         
         break;
@@ -142,7 +142,6 @@ function countSteps() {
 
 function starRemove() {
     $(".stars li:first").remove();
-
 } 
 
 function congratulation() {
@@ -154,26 +153,35 @@ function congratulation() {
     } else {
         star = ' stars';
     }
-    setTimeout(function complete() {
-        alert('Congratulation! You win!' + ' With' + starNum + star + ' and use ' + 
-            second + ' seconds'+ ' and ' + count + ' moves!' );
-    },1000);
+    $(".successInfo").text('With ' + starNum + star + ' and use ' + 
+        second + ' seconds'+ ' and ' + count + ' moves!');
+    $(".congratulation").show();
+}
 
+function reset() {
+    $(".restart").click(function() {
+        restart();
+    });
+}
+
+function tryAgain() {
+    $(".tryAgain").click(function() {
+        $(".congratulation").hide();
+        restart();
+    }); 
 }
 
 function restart() {
-    $(".restart").click(function() {
-        getHtml();
+        getHtml(); 
         clearInterval(timerID);
         count = 0;
         second = 0;
         isCounting = false;
+        openCards = [];
         $(".moves").html(0);
         $(".timer").html(0); 
         $(".stars").empty();
         $(".stars").append("<li><i class='fa fa-star'></i></li><li><i class='fa fa-star'></i></li><li><i class='fa fa-star'></i></li>");
-    });
-   
 }
 
 function timerBegin() {
@@ -183,5 +191,6 @@ function timerBegin() {
     }, 1000);
 }
 
-click();
-restart();
+click(); 
+reset();
+tryAgain();
