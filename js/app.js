@@ -69,6 +69,10 @@ function click() {
             timerBegin();
             isCounting = true;
         }
+        //当牌已经翻开或者已经匹配时，不执行点击事件
+        if ($(this).hasClass("open") || $(this).hasClass("match")) {
+            return;
+        }
         //翻开两张牌，第一张牌存入openCards数组，第二张牌存入openCards数组并与第一张牌进行比对。
         if (openCards.length === 0) {
             openCards.push($(this).children().attr("class"));
@@ -76,6 +80,8 @@ function click() {
         } else if (openCards.length === 1) {
             openCards.push($(this).children().attr("class"));
             $(this).addClass("open show");
+            $(".moves").html(++count);
+            countSteps();
             match(openCards);
         } else {
             return false;
@@ -87,7 +93,7 @@ function match(array) {
     //如果openCards中两个元素相同则执行比对成功函数，失败则执行比对失败函数。
     if (array[0] === array[1]) {
         matchSuccess(array[0]);
-    } else {
+    } else { 
         matchFailure(array);
     }
 }
@@ -100,9 +106,7 @@ function matchSuccess(classname) {
         }
     });
     openCards = [];
-    $(".moves").html(++count);
     matchNum++;
-    countSteps();
     if (matchNum === 8) {
         congratulation();
     }
@@ -129,9 +133,6 @@ function matchFailure(classname) {
         });
     }, 1000);
     openCards = [];
-    $(".moves").html(++count);
-    countSteps();
-
 }
 //掉血逻辑
 function countSteps() {
@@ -161,15 +162,12 @@ function congratulation() {
     clearInterval(timerID);
     //获取玩家游戏时间
     var second = $(".timer").html();
-    //一颗星时star单数，一颗以上复数。
-    if (starNum === 1) {
-        star = ' star';
-    } else {
-        star = ' stars';
+    //显示小星星
+    for (var i = starNum - 1; i >= 0; i--) {
+        $(".starShow").append("<span><i class='fa fa-star'></i></span>"); 
     }
-    //显示玩家游戏信息
-    $(".successInfo").text('With ' + starNum + star + ' and use ' +
-        second + ' seconds' + ' and ' + count + ' moves!');
+    //显示玩家游戏信息，优雅的模板字符串呢~ 划重点：反引号 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/template_strings
+    $(".successInfo").text(`With ${second} seconds and ${count} moves!`);
     //显示congratulation页面
     $(".congratulation").show();
 }
