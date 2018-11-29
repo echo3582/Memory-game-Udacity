@@ -30,8 +30,7 @@ var starNum = 3;
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length,
-        temporaryValue, randomIndex;
+    var currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -156,15 +155,15 @@ function matchFailure(classname) {
 */
 function countSteps() {
     switch (count) {
-        case 10:
-            starRemove();
-            starNum--;
-            break;
         case 20:
             starRemove();
             starNum--;
             break;
         case 30:
+            starRemove();
+            starNum--;
+            break;
+        case 50:
             starRemove();
             starNum--;
             break;
@@ -183,8 +182,9 @@ function starRemove() {
 function congratulation() {
     clearInterval(timerID);
     var second = $(".timer").html();
-    for (var i = starNum - 1; i >= 0; i--) {
-        $(".starShow").append("<span><i class='fa fa-star'></i></span>"); 
+    for (let i = starNum - 1; i >= 0; i--) {
+        console.log(starNum);
+        $(".starShow").append("<li class='liStar'><i class='fa fa-star'></i></li>"); 
     }
     $(".successInfo").text(`With ${second} seconds and ${count} moves!`);
     $(".textShow").addClass("animated bounceInDown");
@@ -217,11 +217,12 @@ function restart() {
     second = 0;
     isCounting = false;
     matchNum = 0;
-    starNum = 0;
+    starNum = 3;
     openCards = [];
     $(".moves").html(0);
     $(".timer").html(0);
     $(".stars").empty();
+    $(".starShow").empty();
     $(".stars").append("<li><i class='fa fa-star'></i></li><li><i class='fa fa-star'></i></li><li><i class='fa fa-star'></i></li>");
 }
 /**
@@ -235,6 +236,7 @@ function timerBegin() {
     }, 1000);
 }
 
+restart();
 click();
 reset();
 tryAgain();

@@ -18,8 +18,13 @@ body {
 
 body {
     background: #ffffff url('../img/geometry2.png');
-    /* Background pattern from Subtle Patterns */
-    font-family: 'Coda', cursive;
+    font-family: 'Roboto Open Sans', sans-serif;
+
+}
+
+h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
 }
 
 .container {
@@ -29,12 +34,6 @@ body {
     flex-direction: column;
 }
 
-h1 {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
-}
-
-
 /*
  * Styles for the deck of cards
  */
@@ -42,6 +41,7 @@ h1 {
 .deck {
     width: 660px;
     min-height: 680px;
+    /*背景颜色渐变*/
     background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
     padding: 32px;
     border-radius: 10px;
@@ -68,9 +68,9 @@ h1 {
 }
 
 .deck .card.open {
-    transform: rotateY(180deg);
     background: #02b3e4;
     cursor: default;
+    animation: flip .2s;
 }
 
 .deck .card.show {
@@ -81,6 +81,7 @@ h1 {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
+    animation: swing 1s;
 }
 
 .deck .card.errorShake {
@@ -130,8 +131,13 @@ h1 {
     display: none;
 }
 
+.congratulation h3 {
+    margin-top: 30px;
+}
+
 .textShow {
     position: absolute;
+    display: block;
     left: 0;
     right: 0;
     top: 0;
@@ -145,15 +151,32 @@ h1 {
 }
 
 .starShow {
-    color: #f2ed25;
+    height: 20px;
+    left: 50%;
+    transform: translateY(-50%);
+    margin: 0 auto;
     size: 40px;
-    margin-bottom: 40px;
+    color: #f2ed25;
+    margin-bottom: 10px;
+    padding: 0;
+}
+
+.liStar {
+    display: inline-block;
+    margin: 0px 5px 15px 5px;
+    font-size: 28px;
+    line-height: 30px;
 }
 
 .tryAgain {
-    font-size: 20px;
+    font-family: 'Roboto, Open Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
     background: black;
-    margin-top: 30px;
-    border-radius: 7px;
+    padding: 0.5em 0.8em;
+    border: none;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    border-radius: 15px;
     color: white;
 }
